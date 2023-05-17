@@ -1,42 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.c                                          :+:      :+:    :+:   */
+/*   valid_argv.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fsalazar <fsalazar@student.42madrid.com:>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/17 13:25:33 by fsalazar          #+#    #+#             */
-/*   Updated: 2023/05/17 13:25:34 by fsalazar         ###   ########.fr       */
+/*   Created: 2023/05/17 13:25:04 by fsalazar          #+#    #+#             */
+/*   Updated: 2023/05/17 13:37:00 by fsalazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	main(int argc, char **argv)
+int	valid_argv(char *file)
 {
-	t_game	game;
+	int	i;
 
-	if (argc == 2)
-	{
-		game.map = load_map(argv[1]);
-		if (valid_argv(argv[1]) && valid_map(&game) && has_valid_path(&game))
-		{
-			load_game(&game);
-			play_game(&game);
-			mlx_loop(game.mlx);
-		}
-		else
-		{
-			ft_printf("Error: Invalid Map Format!\n");
-			if (game.map)
-				free_arr(game.map);
-			return (0);
-		}
-	}
-	else
-	{
-		ft_printf("Error: Invalid Number of Arguments!\n");
-		return (0);
-	}
+	i = 0;
+	while (file[i])
+		i++;
+	if (file[i - 1] == 'r' && file[i - 2] == 'e' && file[i - 3] == 'b'
+		&& file[i - 4] == '.')
+		return (1);
+	ft_printf("Error: Invalid File Extension, use .ber file!\n");
 	return (0);
 }

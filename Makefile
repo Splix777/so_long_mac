@@ -7,17 +7,20 @@ MLXFLAGS = -I /usr/local/include -L /usr/local/lib -l mlx -framework OpenGL -fra
 
 RM = rm -f
 
-SRC =	src/checkers.c \
-		src/gameplay.c \
-		src/handlers.c \
-		src/so_long.c \
-		src/movements.c \
+SRC =	src/gameplay.c		\
+		src/graphical.c		\
+		src/movements.c		\
+		src/so_long.c		\
+		src/utils.c			\
+		src/valid_argv.c	\
+		src/valid_map.c		\
+		src/valid_path.c	\
 
 OBJ = $(SRC:.c=.o)
 
 LIBFT = ./libft/libft.a
 PRINTF = ./ft_printf/libftprintf.a
-MLX = ./minilibx_opengl_20191021/libmlx.a
+MLIBX = ./minilibx_opengl_20191021/libmlx.a
 
 all: $(NAME)
 
@@ -25,7 +28,7 @@ $(NAME): $(OBJ)
 	@make -C libft
 	@make -C ft_printf
 	@make -C minilibx_opengl_20191021
-	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(PRINTF) $(MLX) $(MLXFLAGS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(PRINTF) $(MLIBX) $(MLXFLAGS) -o $(NAME)
 
 %.o: %.c
 	@$(CC) $(CFLAGS) -c $< -o $@

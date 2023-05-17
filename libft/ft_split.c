@@ -43,11 +43,12 @@ static int	ft_word_len(char const *s, char c)
 	return (i);
 }
 
-static void    ft_free(char **str, int j)
+static char	*ft_free(char **str, int j)
 {
 	while (j--)
 		free(str[j]);
 	free(str);
+	return (NULL);
 }
 
 static char	**ft_fill(char const *s, char c, char **str)
@@ -65,10 +66,7 @@ static char	**ft_fill(char const *s, char c, char **str)
 			k = 0;
 			str[j] = malloc(sizeof(char) * (ft_word_len(&s[i], c) + 1));
 			if (!str[j])
-			{
 				ft_free(str, j);
-				return (NULL);
-			}
 			while (s[i] != c && s[i])
 				str[j][k++] = s[i++];
 			str[j++][k] = '\0';

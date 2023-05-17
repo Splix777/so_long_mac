@@ -1,29 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   checkers.c                                         :+:      :+:    :+:   */
+/*   valid_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fsalazar <fsalazar@student.42madrid.com:>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/12 14:38:13 by fsalazar          #+#    #+#             */
-/*   Updated: 2023/05/12 14:38:15 by fsalazar         ###   ########.fr       */
+/*   Created: 2023/05/17 13:25:47 by fsalazar          #+#    #+#             */
+/*   Updated: 2023/05/17 13:25:48 by fsalazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-int	valid_argv(char *file)
-{
-	int	i;
-
-	i = 0;
-	while (file[i])
-		i++;
-	if (file[i - 1] == 'r' && file[i - 2] == 'e'
-        && file[i - 3] == 'b' && file[i - 4] == '.')
-		return (1);
-	return (0);
-}
 
 int	valid_map(t_game *game)
 {
@@ -37,9 +24,10 @@ int	valid_map(t_game *game)
 		i++;
 	if (has_walls(game))
 		i++;
-	if (has_pec(game))
-		i++;
 	if (correct_format(game))
+		i++;
+	has_pec(game);
+	if (game->player == 1 && game->exit == 1 && game->collectible > 0)
 		i++;
 	if (i == 4)
 		return (1);
@@ -95,7 +83,7 @@ int	has_walls(t_game *game)
 	return (1);
 }
 
-int	has_pec(t_game *game)
+void	has_pec(t_game *game)
 {
 	int	i;
 	int	j;
@@ -120,9 +108,6 @@ int	has_pec(t_game *game)
 		}
 		i++;
 	}
-	if (game->player == 1 && game->exit >= 1 && game->collectible > 0)
-		return (1);
-	return (0);
 }
 
 int	correct_format(t_game *game)

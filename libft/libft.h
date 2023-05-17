@@ -87,5 +87,4 @@ char	*gnl_strchr(char *str, char c);
 
 size_t	gnl_strlen(char *str);
 
-
 #endif
