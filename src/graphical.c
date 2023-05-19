@@ -68,7 +68,7 @@ void	load_game(t_game *game)
 	game->mlx = mlx_init();
 	open_window(game);
 	game->win = mlx_new_window(game->mlx, game->img_width, game->img_height,
-			"Not Pac-Man");
+			"Best Game Ever");
 	game->moves = 0;
 	game->winner = 0;
 	load_graphics(game);
@@ -77,7 +77,7 @@ void	load_game(t_game *game)
 		free_arr(game->map);
 		mlx_destroy_window(game->mlx, game->win);
 		mlx_destroy(game->mlx);
-		system("leaks so_long");
+		system("leaks -q so_long");
 		exit(0);
 	}
 	draw_map(game);
