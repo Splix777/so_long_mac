@@ -28,29 +28,31 @@ char	**dup_map(t_game *game)
 	return (map);
 }
 
-int	check_surrounding(char **map, int y, int x)
-{
-	if (map[y][x - 1] == 'X' || map[y][x + 1] == 'X' || map[y - 1][x] == 'X'
-		|| map[y + 1][x] == 'X')
-		return (1);
-	return (0);
-}
-
 void	flood_fill(t_game *game, char **map, int y, int x)
 {
 	if (y < 0 || x < 0 || y >= game->map_height || x >= game->map_width)
 		return ;
-	if (map[y][x] == '1' || map[y][x] == 'C' || map[y][x] == 'E')
+	if (map[y][x] == '1' || map[y][x] == 'E')
 		return ;
-	if (map[y][x] == '0' || map[y][x] == 'P')
+	if (map[y][x] == '0' || map[y][x] == 'P' || map[y][x] == 'C')
 	{
-		if (map[y][x] == '0')
-			map[y][x] = 'X';
+		map[y][x] = 'X';
 		flood_fill(game, map, y + 1, x);
 		flood_fill(game, map, y - 1, x);
 		flood_fill(game, map, y, x + 1);
 		flood_fill(game, map, y, x - 1);
 	}
+}
+
+int	check_surroundings(char **map, int i, int j)
+{
+	if (map[i][j] == 'E')
+	{
+		if (map[i][j + 1] == 'X' || map[i][j - 1] == 'X'
+			|| map[i + 1][j] == 'X' || map[i - 1][j] == 'X')
+			return (1);
+	}
+	return (0);
 }
 
 int	has_valid_path(t_game *game)
@@ -68,8 +70,9 @@ int	has_valid_path(t_game *game)
 		j = 0;
 		while (j < game->map_width)
 		{
-			if ((map[i][j] == 'C' || map[i][j] == 'E' || map[i][j] == 'P')
-				&& !check_surrounding(map, i, j))
+			if (map[i][j] == 'C' || map[i][j] == 'P')
+				game->valid_path = -1;
+			if (map[i][j] == 'E' && !check_surroundings(map, i, j))
 				game->valid_path = -1;
 			j++;
 		}

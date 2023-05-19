@@ -41,6 +41,7 @@ typedef struct s_game
 	int		player;
 	int		exit;
 	int		moves;
+	int		error;
 	int		winner;
 }			t_game;
 
@@ -66,8 +67,8 @@ void		has_pec(t_game *game);
 int			correct_format(t_game *game);
 // Valid Path
 char		**dup_map(t_game *game);
-int			check_surrounding(char **map, int y, int x);
 void		flood_fill(t_game *game, char **map, int y, int x);
+int			check_surroundings(char **map, int i, int j);
 int			has_valid_path(t_game *game);
 // Utils
 void		free_arr(char **arr);

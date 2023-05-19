@@ -34,7 +34,11 @@ char	**load_map(char *file)
 
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-		return (NULL);
+	{
+		ft_printf("Error: Invalid File!\n");
+		system("leaks -q so_long");
+		exit(1);
+	}
 	tmp = NULL;
 	while (1)
 	{

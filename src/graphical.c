@@ -14,6 +14,7 @@
 
 void	load_graphics(t_game *game)
 {
+	game->error = 0;
 	game->img_background = mlx_xpm_file_to_image(game->mlx,
 			"textures/background.xpm", &game->img_width, &game->img_height);
 	game->img_wall = mlx_xpm_file_to_image(game->mlx, "textures/wall.xpm",
@@ -24,6 +25,12 @@ void	load_graphics(t_game *game)
 			&game->img_width, &game->img_height);
 	game->img_collectible = mlx_xpm_file_to_image(game->mlx,
 			"textures/collectible.xpm", &game->img_width, &game->img_height);
+	if (!game->img_background || !game->img_wall || !game->img_player
+		|| !game->img_exit || !game->img_collectible)
+	{
+		ft_printf("Error: Invalid Texture!\n");
+		game->error = -1;
+	}
 }
 
 void	open_window(t_game *game)
@@ -65,6 +72,14 @@ void	load_game(t_game *game)
 	game->moves = 0;
 	game->winner = 0;
 	load_graphics(game);
+	if (game->error == -1)
+	{
+		free_arr(game->map);
+		mlx_destroy_window(game->mlx, game->win);
+		mlx_destroy(game->mlx);
+		system("leaks so_long");
+		exit(0);
+	}
 	draw_map(game);
 }
 
@@ -78,5 +93,6 @@ int	close_window(t_game *game)
 	mlx_destroy_image(game->mlx, game->img_collectible);
 	mlx_destroy_window(game->mlx, game->win);
 	mlx_destroy(game->mlx);
+	system("leaks -q so_long");
 	exit(0);
 }
