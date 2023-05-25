@@ -19,6 +19,8 @@ int	main(int argc, char **argv)
 	if (argc == 2)
 	{
 		game.map = load_map(argv[1]);
+		if (game.map == NULL)
+			return (0);
 		if (valid_argv(argv[1]) && valid_map(&game) && has_valid_path(&game))
 		{
 			load_game(&game);
@@ -34,9 +36,6 @@ int	main(int argc, char **argv)
 		}
 	}
 	else
-	{
 		ft_printf("Error: Invalid Number of Arguments!\n");
-		return (0);
-	}
 	return (0);
 }

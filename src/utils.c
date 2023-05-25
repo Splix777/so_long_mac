@@ -36,7 +36,6 @@ char	**load_map(char *file)
 	if (fd == -1)
 	{
 		ft_printf("Error: Invalid File!\n");
-		system("leaks -q so_long");
 		exit(1);
 	}
 	tmp = NULL;
